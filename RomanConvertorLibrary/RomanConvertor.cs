@@ -22,8 +22,7 @@ namespace RomanConvertorLibrary{
 				int value=2;
 				if(map.TryGetValue((char)roman[check], out value)){
 					if(value == 0){
-						Console.WriteLine("NOT valid numeral");
-						return -1;
+						throw new System.InvalidOperationException("Not a valid Roman Numeral format");
 					}
 				}
 			}
@@ -45,9 +44,8 @@ namespace RomanConvertorLibrary{
 
 		public static String ToRoman(int arabic){
 
-			if(arabic>3999){
-				Console.WriteLine("NOT valid numeral");
-				return "-1";
+			if(arabic>3999||arabic<0){
+				throw new System.InvalidOperationException("number was either to large or to small, aceptable range is 0-3999 inclusive")
 			}
 
 			String convString = " ";
