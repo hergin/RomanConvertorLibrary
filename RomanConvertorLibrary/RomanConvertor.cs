@@ -8,11 +8,30 @@ namespace RomanConvertorLibrary{
 	public class RomanConvertor{
 
 		public static int ToArabic(String roman){
+
+			var map = new Dictionary<String,Integer>();
+			map.Add("M", 1000);
+			map.Add("D", 500);
+			map.Add("C", 100);
+			map.Add("L", 50);
+			map.Add("X", 10);
+			map.Add("V",5);
+			map.Add("I",1);
+
 			
 			int convNum = 0;
+			for(int i =0; i<roman.Length-1; i++){
+				j =i+1;
+				if(map[roman[i]]<map[roman[j]]){
+					convNum += (map[roman[j]]-map[roman[i]]);
+					i = j; 
+				}else{
+					convNum += map[roman[i]];
+				}
+			}
+				return convNum;
+			}
 			
-			return convNum;
-		}
 
 
 		public static String ToRoman(int arabic){
