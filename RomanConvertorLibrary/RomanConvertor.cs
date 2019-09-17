@@ -45,7 +45,7 @@ namespace RomanConvertorLibrary{
 		public static String ToRoman(int arabic){
 
 			if(arabic>3999||arabic<0){
-				throw new System.InvalidOperationException("number was either to large or to small, aceptable range is 0-3999 inclusive")
+				throw new System.InvalidOperationException("number was either to large or to small, aceptable range is 0-3999 inclusive");
 			}
 
 			String convString = " ";
