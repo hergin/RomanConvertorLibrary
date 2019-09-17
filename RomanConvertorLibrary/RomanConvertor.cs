@@ -10,13 +10,13 @@ namespace RomanConvertorLibrary{
 		public static int ToArabic(String roman){
 
 			var map = new Dictionary<char, int>();
-			map.Add("M", 1000);
-			map.Add("D", 500);
-			map.Add("C", 100);
-			map.Add("L", 50);
-			map.Add("X", 10);
-			map.Add("V",5);
-			map.Add("I",1);
+			map.Add('M', 1000);
+			map.Add('D', 500);
+			map.Add('C', 100);
+			map.Add('L', 50);
+			map.Add('X', 10);
+			map.Add('V',5);
+			map.Add('I',1);
 			
 			for(int check =0; check<roman.Length; check++){
 				int value=2;
@@ -47,7 +47,7 @@ namespace RomanConvertorLibrary{
 
 			if(arabic>3999){
 				Console.WriteLine("NOT valid numeral");
-				return -1;
+				return "-1";
 			}
 
 			String convString = " ";
