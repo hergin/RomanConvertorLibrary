@@ -9,7 +9,7 @@ namespace RomanConvertorLibrary{
 
 		public static int ToArabic(String roman){
 
-			var map = new Dictionary<String,Integer>();
+			var map = new Dictionary<char, int>();
 			map.Add("M", 1000);
 			map.Add("D", 500);
 			map.Add("C", 100);
@@ -17,16 +17,25 @@ namespace RomanConvertorLibrary{
 			map.Add("X", 10);
 			map.Add("V",5);
 			map.Add("I",1);
-
+			
+			for(int check =0; check<roman.Length; check++){
+				int value=2;
+				if(map.TryGetValue((char)roman[check], out value)){
+					if(value == 0){
+						Console.WriteLine("NOT valid numeral");
+						return -1;
+					}
+				}
+			}
 			
 			int convNum = 0;
 			for(int i =0; i<roman.Length-1; i++){
-				j =i+1;
-				if(map[roman[i]]<map[roman[j]]){
-					convNum += (map[roman[j]]-map[roman[i]]);
+				int j =i+1;
+				if(map[(char)roman[i]]<map[(char)roman[j]]){
+					convNum += (map[(char)roman[j]]-map[(char)roman[i]]);
 					i = j; 
 				}else{
-					convNum += map[roman[i]];
+					convNum += map[(char)roman[i]];
 				}
 			}
 				return convNum;
@@ -36,11 +45,16 @@ namespace RomanConvertorLibrary{
 
 		public static String ToRoman(int arabic){
 
+			if(arabic>3999){
+				Console.WriteLine("NOT valid numeral");
+				return -1;
+			}
+
 			String convString = " ";
 			int ones_digit = arabic%10;
-			int tens_digit = arabic%100-ones_digit;
-			int huns_digit = arabic%1000-tens_digit;
-			int thous_digit = arabic%10000-huns_digit;
+			int tens_digit = (arabic-ones_digit)%100;
+			int huns_digit = (arabic-tens_digit-ones_digit)%1000;
+			int thous_digit = (arabic-huns_digit-tens_digit-ones_digit)/1000;
 			
 			switch(thous_digit){
 				case 0:
