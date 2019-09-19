@@ -11,22 +11,20 @@ namespace RomanConvertorLibrary
 
 		public static int ToArabic(String roman)
 		{
-			if (romain.Contains("I, V, X, L, C, D, M") == false)
+			if (roman.Contains("I, V, X, L, C, D, M") == false)
 			{
 				throw new FormatException();
 			}
 			//letter to numbers
-			if (CharValues == null)
-			{
-				CharValues = new Dictionary<char, int>();
-				CharValues.Add('I', 1);
-				CharValues.Add('V', 5);
-				CharValues.Add('X', 10);
-				CharValues.Add('L', 50);
-				CharValues.Add('C', 100);
-				CharValues.Add('D', 500);
-				CharValues.Add('M', 1000);
-			}
+	        Dictionary<char, int> CharValues = new Dictionary<char, int>();
+			CharValues.Add('I', 1);
+			CharValues.Add('V', 5);
+			CharValues.Add('X', 10);
+			CharValues.Add('L', 50);
+			CharValues.Add('C', 100);
+			CharValues.Add('D', 500);
+			CharValues.Add('M', 1000);
+			
 
 			//convert letter values
 			int total = 0;
@@ -49,9 +47,18 @@ namespace RomanConvertorLibrary
 			return total;
 		}
 
+        
 
-		public static String ToRoman(int arabic)
+        public static String ToRoman(int arabic)
 		{
+            string[] thousands = { "", "M", "MM", "MMM" };
+            string[] hundreds =
+            { "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
+            string[] tens =
+            { "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
+            string[] ones =
+            { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+
 			if(arabic < 1 || arabic > 3999)
 			{
 				throw new InvalidOperationException();
@@ -61,21 +68,21 @@ namespace RomanConvertorLibrary
 			//thousands
 			int num;
 			num = arabic / 1000;
-			result += ThouLetters[num];
+			result += thousands[num];
 			arabic %= 1000;
 
 			//hundreds
 			num = arabic / 100;
-			result += HundLetters[num];
+			result += hundreds[num];
 			arabic %= 100;
 
 			//tens
 			num = arabic / 10;
-			result += TensLetters[num];
+			result += tens[num];
 			arabic %= 10;
 
 			//ones
-			result += OnesLetters[arabic];
+			result += ones[arabic];
 
 			return result;
 		}
