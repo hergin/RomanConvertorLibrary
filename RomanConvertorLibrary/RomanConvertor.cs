@@ -11,15 +11,30 @@ namespace RomanConvertorLibrary
 
 		public static int ToArabic(String roman)
 		{
-			// Replace the following line with the actual code!
-			throw new NotImplementedException();
-		}
+            List<string> characterList = new List<string>();
+            characterList.Add("I", "V", "X", "L", "C", "D", "M");
+            if (characterList.Contains(roman))
+            {
+
+            }
+            else
+            {
+                throw new FormatException();
+            }
+            // Replace the following line with the actual code!
+
+        }
 
 
 		public static String ToRoman(int arabic)
 		{
-			// Replace the following line with the actual code!
-			throw new NotImplementedException();
-		}
+            
+            if (arabic > 3999 || arabic < 1)
+            {
+                throw new InvalidOperationException();
+
+            }
+
+        }
 	}
 }
