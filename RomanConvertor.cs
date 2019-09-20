@@ -21,22 +21,23 @@ namespace RomanConvertorLibrary
 
             for (int i = 0; i < roman.Length; i++)
             {
-                if (validChars.ContainsKey(roman[i]))
+                if (!validChars.ContainsKey(roman[i]))
                 {
-                    current = validChars[roman[i]];
-                    
-                    if(current > previous && previous != 0) //skip evaluation and load next value if integer "previous" is empty (0)
-                    {
-                        arabicOutput += (current - previous);
-                        current = 0;
-                    }
-                    else if (current <= previous)
-                    {
-                        arabicOutput += previous;
-                    }
-                    previous = current;
+                    throw new FormatException();
                 }
-                else { throw new FormatException(); }
+
+                current = validChars[roman[i]];
+
+                if (current > previous && previous != 0) //skip evaluation and load next value if integer "previous" is empty (0)
+                {
+                    arabicOutput += (current - previous);
+                    current = 0;
+                }
+                else if (current <= previous)
+                {
+                    arabicOutput += previous;
+                }
+                previous = current;
             }
             arabicOutput += current; //add final letter value if integer "current" was <= integer "previous"
             return arabicOutput;
@@ -49,25 +50,28 @@ namespace RomanConvertorLibrary
             Dictionary<int, string> romanValues = new Dictionary<int, String> { { 1000, "M" }, { 900, "CM" }, { 500, "D" }, { 400, "CD" }, { 100, "C" }, { 90, "XC" }, { 50, "L" }, { 40, "XL" }, { 10, "X" }, { 9, "IX" }, { 5, "V" }, { 4, "IV" }, { 1, "I" } };
             String romanString = "";
 
-            if (1 <= arabic && arabic <= 3999)
+            if (1 >= arabic || arabic >= 3999)
             {
-                int currentSub = subQueue.Dequeue();
-                while(subQueue.Count != 0 && arabic != 0)
-                {
-                    if(arabic >= currentSub)
-                    {
-                        arabic -= currentSub;
-                        romanString += romanValues[currentSub];
-                    }
-                    else
-                    {
-                        currentSub = subQueue.Dequeue();
-                    }
-                }
-
-                return romanString;
+                throw new InvalidOperationException();
             }
-            else { throw new InvalidOperationException(); }
+
+            int currentSub = subQueue.Dequeue();
+
+            while (subQueue.Count != 0 && arabic != 0)
+            {
+                if(arabic >= currentSub)
+                {
+                    arabic -= currentSub;
+                    romanString += romanValues[currentSub];
+                }
+                else
+                {
+                    currentSub = subQueue.Dequeue();
+                }
+            }
+
+            return romanString;
+            
 		}
 	}
 }
